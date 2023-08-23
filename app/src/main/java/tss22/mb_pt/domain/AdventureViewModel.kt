@@ -84,6 +84,9 @@ class AdventureViewModel @Inject constructor(
         viewModelScope.launch {
             dao.getButtonsProperties(idPage).collect{
                 _stateButtons.value = it
+                for(button in it){
+                    Log.d("BUTTONS", button.text)
+                }
             }
         }
         viewModelScope.launch {
