@@ -12,5 +12,6 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+
 rootProject.name = "Mighty Bobby - Pax Temporalis"
-include ':app'
+include(":app")

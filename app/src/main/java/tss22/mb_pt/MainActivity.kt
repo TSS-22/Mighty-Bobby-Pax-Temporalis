@@ -3,22 +3,28 @@ package tss22.mb_pt
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.activity.viewModels
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import dagger.hilt.android.AndroidEntryPoint
+import tss22.mb_pt.data.states.AppState
 import tss22.mb_pt.ui.theme.MightyBobbyPaxTemporalisTheme
+import tss22.mb_pt.domain.AdventureViewModel
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    private val viewModel: AdventureViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             MightyBobbyPaxTemporalisTheme {
-                // A surface container using the 'background' color from the theme
-                AdventureScreen()
+                val state: AppState by viewModel.state.collectAsState()
+                AdventureScreen(
+                    state = state,
+                    onEvent = viewModel::onEvent
+                )
             }
         }
     }
